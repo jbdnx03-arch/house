@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>仮設ハウス 備品レイアウト</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>仮設ハウス　備品レイアウト<span class="sub">三共リース 備品カタログ vol.8／実寸 1マス=100mm</span></h1>
+  <div class="hbtns">
+    <button id="btnSave">保存</button>
+    <button id="btnLoad">読込</button>
+    <button id="btnPng">PNG</button>
+    <button id="btnPdf">PDF / 印刷</button>
+    <input type="file" id="fileIn" accept=".json" hidden>
+  </div>
+</header>
+
+<div id="main">
+  <aside id="left">
+    <section class="panel">
+      <h2>間取り</h2>
+      <div class="grid2">
+        <label>ユニット幅 W<input type="number" id="pW" value="2300" step="50"></label>
+        <label>奥行 D<input type="number" id="pD" value="7250" step="50"></label>
+        <label>連棟数<input type="number" id="pN" value="4" min="1" max="12"></label>
+        <label>壁厚<input type="number" id="pT" value="75" step="5"></label>
+        <label>階数
+          <select id="pF"><option value="1">1階建て</option><option value="2">2階建て</option></select>
+        </label>
+        <label>下屋(庇)<input type="number" id="pCan" value="0" step="100"></label>
+        <label class="wide">間仕切り位置【1F】<input type="text" id="pP1" placeholder="例 2350,4700（空欄=なし）"></label>
+        <label class="wide f2only">間仕切り位置【2F】<input type="text" id="pP2" placeholder="例 6900"></label>
+      </div>
+      <div class="calc" id="calcOut"></div>
+      <h3>出入口（1F）</h3>
+      <div class="grid2">
+        <label>種類
+          <select id="dType"><option value="0">なし</option><option value="1">引違い</option><option value="2">片開き</option></select>
+        </label>
+        <label>位置
+          <select id="dSide"><option value="1">下</option><option value="2">上</option><option value="3">左</option><option value="4">右</option></select>
+        </label>
+        <label>幅<input type="number" id="dW" value="1800" step="50"></label>
+        <label>起点<input type="number" id="dP" value="1000" step="50"></label>
+      </div>
+      <h3>窓（各面の数）</h3>
+      <div class="grid2">
+        <label>幅<input type="number" id="wW" value="1650" step="50"></label>
+        <label>上<input type="number" id="nwT" value="0" min="0" max="12"></label>
+        <label>下<input type="number" id="nwB" value="0" min="0" max="12"></label>
+        <label>左<input type="number" id="nwL" value="0" min="0" max="12"></label>
+        <label>右<input type="number" id="nwR" value="0" min="0" max="12"></label>
+      </div>
+      <label class="wide">図面名<input type="text" id="pName" placeholder="現場名（空欄なら自動）"></label>
+      <button id="btnDraw" class="primary">この寸法で作図</button>
+      <p class="warn" id="drawMsg"></p>
+    </section>
+
+    <section class="panel">
+      <h2>備品を置く</h2>
+      <input type="search" id="q" placeholder="品名で検索（例: 平机、ロッカー）">
+      <div id="cats"></div>
+      <div id="palette"></div>
+    </section>
+  </aside>
+
+  <main id="center">
+    <div id="toolbar">
+      <span id="selInfo">図形をクリックすると選べます</span>
+      <span class="spacer"></span>
+      <button id="btnUndo" title="Cmd/Ctrl+Z">元に戻す</button>
+      <button id="btnRot" title="R">90°回転</button>
+      <button id="btnDup" title="D">複製</button>
+      <button id="btnStack">2段積み</button>
+      <button id="btnUnstack">解除</button>
+      <button id="btnDel" class="danger" title="Delete">削除</button>
+      <span class="spacer"></span>
+      <label class="chk"><input type="checkbox" id="snap" checked>マス目に合わせる</label>
+      <label class="chk"><input type="checkbox" id="showPhoto" checked>写真</label>
+      <button id="btnZoomOut">−</button><span id="zoomLbl">100%</span><button id="btnZoomIn">＋</button><button id="btnFit">全体表示</button>
+      <button id="btnClear" class="danger">配置をクリア</button>
+    </div>
+    <div id="stage"><svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  </main>
+
+  <aside id="right">
+    <section class="panel">
+      <h2>配置備品リスト</h2>
+      <div id="tables"></div>
+    </section>
+  </aside>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
